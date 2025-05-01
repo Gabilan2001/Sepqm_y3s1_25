@@ -2,25 +2,42 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const Login = ({ setIsLoggedIn }) => {
+const Login = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setError('');
+
     try {
       const { data } = await axios.post('http://localhost:5000/api/auth/login', {
         email,
         password,
       });
 
-      localStorage.setItem('userInfo', JSON.stringify(data));
-      setIsLoggedIn(true); // Update login state in App component
-      navigate('/'); // Redirect to home page after successful login
+      if (data?.token) {
+        const userData = {
+          token: data.token,
+          _id: data._id,
+          name: data.name,
+          email: data.email,
+          role: data.role
+        };
+        
+        onLoginSuccess(userData);
+        navigate('/');
+      } else {
+        setError('Invalid login credentials');
+      }
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      setError(err.response?.data?.message || 'Login failed. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -51,7 +68,13 @@ const Login = ({ setIsLoggedIn }) => {
             required
           />
         </div>
-        <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded-md">Login</button>
+        <button 
+          type="submit" 
+          className="w-full bg-blue-500 text-white p-2 rounded-md disabled:opacity-50"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? 'Logging in...' : 'Login'}
+        </button>
       </form>
       <div className="mt-4 text-center">
         <p>Don't have an account? <Link to="/register" className="text-blue-500">Register here</Link></p>
