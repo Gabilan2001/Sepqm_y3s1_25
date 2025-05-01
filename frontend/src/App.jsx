@@ -9,7 +9,6 @@ import Profile from './pages/Profile';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Check localStorage on component mount to see if the user is logged in
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo'));
     if (userInfo) {
@@ -17,10 +16,9 @@ function App() {
     }
   }, []);
 
-  // Handle logout
   const handleLogout = () => {
     localStorage.removeItem('userInfo');
-    setIsLoggedIn(false);
+    setIsLoggedIn(false); // Update state to reflect logout
   };
 
   return (

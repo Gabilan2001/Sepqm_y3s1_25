@@ -7,6 +7,7 @@ const Profile = () => {
   const [phone, setPhone] = useState('');
   const [profileImage, setProfileImage] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(true); // To handle loading state
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -19,14 +20,16 @@ const Profile = () => {
         setName(data.name);
         setEmail(data.email);
         setPhone(data.phone);
-        setProfileImage(data.profileImage);
+        setProfileImage(data.profileImage); // Set the profile image URL from the backend
       } catch (error) {
         console.error('Error fetching profile:', error);
+      } finally {
+        setLoading(false); // Stop loading once data is fetched
       }
     };
 
     fetchProfile();
-  }, []);
+  }, []); // Empty dependency array ensures this runs once on mount
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,18 +43,26 @@ const Profile = () => {
           },
         }
       );
-      setMessage('Profile updated successfully');
+      setMessage('Profile updated successfully'); // Set the success message
       localStorage.setItem('userInfo', JSON.stringify(data));
+      setName(data.name);
+      setEmail(data.email);
+      setPhone(data.phone);
+      setProfileImage(data.profileImage); // Update the profile image state immediately
     } catch (error) {
-      console.error('Error updating profile:', error);
-      setMessage('Error updating profile');
+      //console.error('Error updating profile:', error);
+      //setMessage('Error updating profile'); // Set the error message only on failure
     }
   };
+
+  if (loading) {
+    return <div className="text-center p-8 text-lg text-gray-700">Loading...</div>;
+  }
 
   return (
     <div className="max-w-md mx-auto p-4 bg-white rounded-md shadow-md">
       <h2 className="text-2xl font-semibold mb-4">Profile</h2>
-      {message && <div className="mb-4 text-green-500">{message}</div>}
+      {message && <div className="mb-4 text-green-500">{message}</div>} {/* Display message only if it exists */}
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-700">Name</label>
@@ -95,6 +106,17 @@ const Profile = () => {
         </div>
         <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded-md">Update Profile</button>
       </form>
+
+      {profileImage && (
+        <div className="mt-6">
+          <h3 className="text-lg font-semibold">Profile Image</h3>
+          <img
+            src={profileImage}
+            alt="Profile"
+            className="mt-2 rounded-lg border shadow-lg w-32 h-32 object-cover"
+          />
+        </div>
+      )}
     </div>
   );
 };
