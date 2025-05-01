@@ -8,7 +8,7 @@ const Register = () => {
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // To handle redirection
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ const Register = () => {
       });
 
       localStorage.setItem('userInfo', JSON.stringify(data));
-      navigate('/');
+      navigate('/login'); // Redirect to login page after successful registration
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
     }
