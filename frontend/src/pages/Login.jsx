@@ -17,7 +17,7 @@ const Login = ({ setIsLoggedIn }) => {
       });
 
       localStorage.setItem('userInfo', JSON.stringify(data));
-      setIsLoggedIn(true); // Update the login state
+      setIsLoggedIn(true); // Update login state in App component
       navigate('/'); // Redirect to home page after successful login
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
