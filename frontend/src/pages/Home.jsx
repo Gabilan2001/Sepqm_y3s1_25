@@ -44,7 +44,7 @@ const Home = ({ isLoggedIn }) => {
               <p className="text-gray-600 mt-2">You are logged in as: <span className="font-semibold">{userData?.role}</span></p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="border border-gray-300 rounded-lg p-6 hover:shadow-lg transition-shadow">
                 <h3 className="text-xl font-semibold text-gray-800 mb-2">Your Profile</h3>
                 <p className="text-gray-500 mb-4">View and update your personal information.</p>
@@ -53,6 +53,17 @@ const Home = ({ isLoggedIn }) => {
                   className="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition-colors"
                 >
                   Go to Profile
+                </Link>
+              </div>
+
+              <div className="border border-gray-300 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Book Management</h3>
+                <p className="text-gray-500 mb-4">Manage your book collection. Add, edit, and delete books.</p>
+                <Link
+                  to="/books"
+                  className="inline-block bg-purple-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-purple-600 transition-colors"
+                >
+                  Manage Books
                 </Link>
               </div>
 
@@ -94,7 +105,7 @@ const Home = ({ isLoggedIn }) => {
           <h3 className="text-xl font-semibold text-gray-800 mb-2">About This Project</h3>
           <p className="text-gray-600">
             This is a full-stack application demonstrating user authentication, profile management, 
-            and role-based access control. Built with React, Node.js, Express, and MongoDB.
+            book management, and role-based access control. Built with React, Node.js, Express, and MongoDB.
           </p>
         </div>
       </div>
