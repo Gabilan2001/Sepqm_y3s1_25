@@ -148,6 +148,7 @@ import Profile from './pages/Profile';
 import AdminDashboard from './pages/AdminDashboard';
 import Offers from './pages/Offers';
 import axios from 'axios';
+import Product from './pages/Product'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -251,7 +252,31 @@ function App() {
             )
           } 
         />
+        <Route 
+          path="/product" 
+          element={
+            isLoggedIn && userInfo?.role === 'Admin' ? (
+              <Product />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          } 
+        />
+
+        <Route 
+          path="/product" 
+          element={
+            isLoggedIn && userInfo?.role === 'Admin' ? (
+              <Product />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          } 
+        />
+        
         <Route path="/offers" element={<Offers />} />
+        <Route path="/products" element={<Product />} />
+        
       </Routes>
     </Router>
   );

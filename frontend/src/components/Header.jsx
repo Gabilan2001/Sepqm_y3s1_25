@@ -180,6 +180,15 @@ const Header = ({ isLoggedIn, userInfo, onLogout }) => {
                     <FaTag className="mr-2" /> Admin Dashboard
                   </Link>
                 )}
+                {role === 'Admin' && (
+                  <Link 
+                    to="/product" 
+                    className="block px-3 py-2 text-sm hover:bg-gray-600 flex items-center"
+                    onClick={() => setIsToggleOpen(false)}
+                  >
+                    <FaTag className="mr-2" /> Product
+                  </Link>
+                )}
                 <button
                   onClick={() => {
                     onLogout();
