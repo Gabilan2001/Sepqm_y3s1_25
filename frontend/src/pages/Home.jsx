@@ -55,6 +55,7 @@ const Home = ({ isLoggedIn }) => {
                   Go to Profile
                 </Link>
               </div>
+              
 
               {userData?.role === 'Admin' && (
                 <div className="border border-gray-300 rounded-lg p-6 hover:shadow-lg transition-shadow">
@@ -65,6 +66,19 @@ const Home = ({ isLoggedIn }) => {
                     className="inline-block bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition-colors"
                   >
                     Admin Dashboard
+                  </Link>
+                </div>
+              )}
+
+              {userData?.role === 'Admin' && (
+                <div className="border border-gray-300 rounded-lg p-6 hover:shadow-lg transition-shadow">
+                  <h3 className="text-xl font-semibold text-gray-800 mb-2">ADD PRODUCTS</h3>
+                  <p className="text-gray-500 mb-4">Add Products.</p>
+                  <Link
+                    to="/product"
+                    className="inline-block bg-pink-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-pink-600 transition-colors"
+                  >
+                    Product
                   </Link>
                 </div>
               )}
